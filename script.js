@@ -57,7 +57,7 @@ async function getDados() {
         const pais = dado[1];
         const vendas = dado[8];
 
-        //Coloca os paises no eixo x da tabela e as vendas no eixo y
+        //Coloca os paises no eixo x do gráfico e as vendas no eixo y
         eixo_x.push(pais); 
         eixo_y.push(vendas);
 
