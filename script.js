@@ -1,10 +1,48 @@
-//fonte dos dados em CSV
-const fonte_dados = 'dados/ZonAnn.Ts+dSST.csv';
+criaGrafico();
 
-getDados();
+const eixo_x = [];
+const eixo_y = [];
 
-//parsing manual com função assíncrona
+//precisa de uma função assíncrona para esperar os dados carregarem antes de carregar o gráfico
+async function criaGrafico(){
+    await getDados();    
+    const ctx = document.getElementById('grafico').getContext('2d');
+    const myChart = new Chart(ctx, {
+        //tipo de gráfico. pode ser: line, bar, radar, pie, doughnut, polarArea, bubble e scatter, 
+        type: 'bar',
+        data: {
+            //dados no eixo x
+            labels: eixo_x,
+            datasets: [{
+                label: 'Vendas por país',
+                //dados no eixo y
+                data: eixo_y,
+                //cor de fundo
+                backgroundColor: 'blue',
+                //cor de borda
+                borderColor: 'black',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+
+//parsing manual dos dados
 async function getDados() {
+
+    //fonte dos dados em CSV
+    const fonte_dados = 'dados/100 Sales Records.csv';
+
     const response = await fetch(fonte_dados);
     const dados = await response.text();
     
@@ -16,11 +54,15 @@ async function getDados() {
         const dado = linha.split(',');
 
         //atribui os dados a uma variável
-        const ano = dado[0];
-        const temp = dado[1];
+        const pais = dado[1];
+        const vendas = dado[8];
+
+        //Coloca os anos no eixo x da tabela e a temperatura no eixo y
+        eixo_x.push(pais); 
+        eixo_y.push(vendas);
 
         //checando no console
-        console.log(ano, temp);
+        console.log(pais, vendas);
     });
 
 }
