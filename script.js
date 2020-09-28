@@ -57,7 +57,7 @@ async function getDados() {
         const pais = dado[1];
         const vendas = dado[8];
 
-        //Coloca os anos no eixo x da tabela e a temperatura no eixo y
+        //Coloca o a país no eixo x da tabela e as vendas no eixo y
         eixo_x.push(pais); 
         eixo_y.push(vendas);
 
